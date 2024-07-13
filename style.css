@@ -1,0 +1,168 @@
+body{
+   background-image: url(images\ \(3\).jpg);
+   background-repeat: no-repeat;
+   background-size: cover;
+    color: white;
+}
+
+.navbar{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: white;
+    
+    overflow: hidden;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.navbar a{
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.navbar a:hover{
+    background-color: #575757;
+}
+
+
+@media  screen and (max-width: 570px) {
+    .navbar a{
+        padding: 10px 14px;
+        font-size: 14px;
+    }
+}
+
+ .popup{
+    display: none;
+    position: fixed;
+    background-color: white;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    text-align: center;
+    z-index: 10;
+    width: 300px;
+    height: auto;
+ }
+select{
+    border: 1px solid #ccc;
+    width: 100%;
+    padding: 1opx;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #f9f9f9;
+}
+
+select option{
+    padding: 10px;
+    font-size: 16px;
+}
+
+button{
+    padding: 10px 20px;
+    margin-top: 10px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover{
+    background-color: #1b5475;
+}
+
+select:focus, button:focus{
+    outline: none;
+    border: 1px solid #1b5475;
+}
+
+select option[value="happy"]{
+    background-color: pink;
+}
+select option[value="sad"]{
+    background-color: pink;
+}
+select option[value="silly"]{
+    background-color: pink;
+}
+select option[value="confused"]{
+    background-color: pink;
+}
+select option[value="angry"]{
+    background-color: pink;
+}
+select option[value="blessed"]{
+    background-color: pink;
+}
+
+#quote-text{
+    font-size: 30px;
+    font-weight: bolder;
+    font-style: italic;
+    color: #0e0b0b;
+}
+
+
+ .popup.show{
+    display: block;
+ }
+
+
+#todo-app{
+    margin: 20px;
+}
+
+#new-task{
+    width: calc(100% - 40px);
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 16px;
+    font-size: 16px;
+}
+
+#task-list{
+    list-style-type: none;
+    padding: 0;
+}
+
+#task-list li{
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#task-list li button{
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#task-list li button:hover{
+    background-color: #d31f2f;
+}
+
+
+
+
+
+
+
+
+
+
+
