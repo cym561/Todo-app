@@ -40,8 +40,10 @@ body{
 }
 
 h3{
-    margin-top: 500px;
+    margin-top: 1000px;
     display: none;
+    text-align: bottom;
+    font-size: 300px;
 
 }
 
@@ -56,8 +58,8 @@ h3{
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
     text-align: center;
     z-index: 10;
-    width: 500px;
-    height: 600px;
+    width: 300px;
+    height: 300px;
  }
 
  .heading{
