@@ -7,7 +7,7 @@ body {
     position: fixed;
     bottom: 0;
     width: 100%;
-    background-color: grey;
+    background-color: #808080;
     overflow: hidden;
     display: flex;
     justify-content: space-around;
@@ -81,33 +81,37 @@ body {
 .add-task-btn {
     font-size: 24px;
     padding: 10px;
-    margin-top: 20px;
-    background-color: #4CAF50;
+    margin-top: 100px;
+    background-color: #072008;
     color: white;
     border-radius: 50%;
     cursor: pointer;
+    position: sticky;
+    right: 0;
 }
 
 .page {
     display: none;
+    text-align: center;
+    margin: 0 auto;
 }
 
 
 button {
-    margin-top: 5px;
+    margin-top: 10px;
     padding: 10px 20px;
-    background-color: green;
+    background-color: rgb(5, 36, 5);
     color: white;
 }
 
 button:hover {
-    background-color: #1b5475;
+    background-color: #10232e;
 }
 
 #date {
-    margin-top: 5px;
+    margin-top: 100px;
     font-weight: lighter;
-    font-size: 12px;
+    font-size: 22px;
 }
 
 select {
@@ -150,7 +154,10 @@ select option[value="blessed"] {
 }
 
 #todo-app {
-    margin: 20px;
+    text-align: center;
+    margin-top: 100px;
+
+
 }
 
 #new-task {
@@ -246,36 +253,8 @@ body.light {
 }
 
 body.dark {
-    background-color: #333;
+    background-color: #080808;
     color: white;
 }
 
-body.blue {
-    background-color: #1490f5;
-    color: white;
-}
 
-body.green {
-    background-color: rgb(29, 211, 29);
-    color: white;
-}
-
-body.yellow {
-    background-color: rgb(243, 243, 19);
-    color: black;
-}
-
-body.purple {
-    background-color: rgb(158, 16, 158);
-    color: white;
-}
-
-body.pink {
-    background-color: rgb(245, 31, 67);
-    color: white;
-}
-
-body.grey {
-    background-color: grey;
-    color: white;
-}
