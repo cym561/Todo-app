@@ -116,6 +116,29 @@ function goHome() {
     showPage('home');
 }
 
+function saveNotes() {
+    var notes = document.getElementById('notes').value.trim();
+    if (notes !== "") {
+        // Here you can save the notes to localStorage, database, or any other storage method.
+        // For example, save to localStorage:
+        localStorage.setItem('userNotes', notes);
+        alert("Notes saved successfully!");
+    } else {
+        alert("Please enter some notes.");
+    }
+}
+
+window.onload = function () {
+    document.getElementById('mood-popup').classList.add('show');
+    
+    // Load saved notes on page load (if any)
+    var savedNotes = localStorage.getItem('userNotes');
+    if (savedNotes) {
+        document.getElementById('notes').value = savedNotes;
+    }
+}
+
+
 function openSettings() {
     document.getElementById('settings-page').classList.add("open");
 }
