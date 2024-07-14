@@ -99,7 +99,7 @@ function updateTaskNumbers() {
     var tasks = taskList.getElementsByTagName('li');
     for (var i = 0; i < tasks.length; i++) {
         var taskLabel = tasks[i].getElementsByTagName('span')[0];
-        taskLabel.textContent = (i + 1) + " " + taskLabel.textContent.split('.')[1];
+        taskLabel.textContent = (i + 1) + ". " + taskLabel.textContent.split('. ')[1];
     }
 }
 
