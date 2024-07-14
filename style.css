@@ -81,7 +81,8 @@ body {
 .add-task-btn {
     font-size: 24px;
     padding: 10px;
-   
+   margin-left: 200px;
+   margin-top: 200px;
     background-color: #072008;
     color: white;
     border-radius: 50%;
@@ -90,8 +91,12 @@ body {
     right: 0;
 }
 
+p{
+    margin-top: 3px;
+}
+
 #profile-page textarea {
-    width: 400px;
+    width: 250px;
     height: 200px;
     padding: 10px;
     margin-bottom: 10px;
