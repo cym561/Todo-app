@@ -1,22 +1,20 @@
-body{
-   
-    max-width: 100% ;
-    max-height:auto;
+body {
+    max-width: 100%;
+    max-height: auto;
 }
 
-.navbar{
+.navbar {
     position: fixed;
     bottom: 0;
     width: 100%;
     background-color: grey;
-    
     overflow: hidden;
     display: flex;
     justify-content: space-around;
     align-items: center;
 }
 
-.navbar a{
+.navbar a {
     display: block;
     color: black;
     text-align: center;
@@ -25,39 +23,28 @@ body{
     transition: background-color 0.3s;
 }
 
-.navbar a:hover{
+.navbar a:hover {
     background-color: #575757;
 }
 
-
-@media  screen and (max-width: 570px) {
-    .navbar a{
+@media screen and (max-width: 570px) {
+    .navbar a {
         padding: 10px 14px;
         font-size: 14px;
     }
 
-    .navbar{
-        position: fixed;
-        bottom: 0;
-        width: 100%;
+    .navbar {
         background-color: rgb(255, 255, 255);
         box-shadow: 3px 3px;
-        overflow: hidden;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
     }
-    
-    body{
-        position: fixed;
-        max-width: 100% ;
-        max-height:auto;
+
+    body {
+        max-width: 100%;
+        max-height: auto;
     }
 }
 
-
-
- .popup{
+.popup {
     display: none;
     position: fixed;
     background-color: white;
@@ -65,33 +52,33 @@ body{
     left: 50%;
     transform: translate(-50%, -50%);
     padding: 20px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     text-align: center;
     z-index: 10;
     width: 300px;
     height: 300px;
- }
+}
 
- .heading{
+.heading {
     text-align: center;
     margin-top: 50px;
     font-size: 34px;
     font-weight: bold;
- }
+}
 
- .add{
+.add {
     margin-left: 140px;
     margin-top: 20px;
     padding: 10px 20px;
     background-color: green;
     color: white;
-    
- }
-.add-task-btn:hover{
-  background-color: #45a049;
 }
 
-.add-task-btn{
+.add-task-btn:hover {
+    background-color: #45a049;
+}
+
+.add-task-btn {
     font-size: 24px;
     padding: 10px;
     margin-top: 20px;
@@ -101,81 +88,72 @@ body{
     cursor: pointer;
 }
 
- button{
+.page {
+    display: none;
+}
+
+
+button {
     margin-top: 5px;
     padding: 10px 20px;
     background-color: green;
     color: white;
- }
- #date{
+}
+
+button:hover {
+    background-color: #1b5475;
+}
+
+#date {
     margin-top: 5px;
     font-weight: lighter;
     font-size: 12px;
-   
+}
 
- }
-select{
+select {
     border: 1px solid #ccc;
     width: 100%;
-    padding: 1opx;
+    padding: 10px;
     border-radius: 5px;
     font-size: 16px;
     background-color: #f9f9f9;
 }
 
-select option{
+select option {
     padding: 10px;
     font-size: 16px;
 }
 
-
-
-button:hover{
-    background-color: #1b5475;
-}
-
-select:focus, button:focus{
+select:focus, button:focus {
     outline: none;
     border: 1px solid #1b5475;
 }
 
-select option[value="happy"]{
-    background-color: pink;
-}
-select option[value="sad"]{
-    background-color: pink;
-}
-select option[value="silly"]{
-    background-color: pink;
-}
-select option[value="confused"]{
-    background-color: pink;
-}
-select option[value="angry"]{
-    background-color: pink;
-}
-select option[value="blessed"]{
+select option[value="happy"],
+select option[value="sad"],
+select option[value="silly"],
+select option[value="confused"],
+select option[value="angry"],
+select option[value="blessed"] {
     background-color: pink;
 }
 
-#quote-text{
+#quote-text {
     font-size: 30px;
     font-weight: bolder;
     font-style: italic;
     color: #0e0b0b;
 }
 
-
- .popup.show{
+.popup.show {
     display: block;
- }
+}
 
-
-#todo-app{
+#todo-app {
     margin: 20px;
 }
 
-#new-task{
+#new-task {
     width: calc(100% - 40px);
     padding: 10px;
     margin-right: 10px;
@@ -184,12 +162,12 @@ select option[value="blessed"]{
     font-size: 16px;
 }
 
-#task-list{
+#task-list {
     list-style-type: none;
     padding: 0;
 }
 
-#task-list li{
+#task-list li {
     padding: 10px;
     border-bottom: 1px solid #ccc;
     display: flex;
@@ -197,7 +175,7 @@ select option[value="blessed"]{
     align-items: center;
 }
 
-#task-list li button{
+#task-list li button {
     background-color: #f44336;
     color: white;
     border: none;
@@ -206,7 +184,7 @@ select option[value="blessed"]{
     cursor: pointer;
 }
 
-#task-list li button:hover{
+#task-list li button:hover {
     background-color: #d31f2f;
 }
 
@@ -215,16 +193,16 @@ select option[value="blessed"]{
     color: #888;
 }
 
-#task-list li input[type="checkbox"]{
+#task-list li input[type="checkbox"] {
     margin-right: 10px;
 }
-.settings-class{
+
+.settings-class {
     margin-top: 20px;
     font-size: 36px;
-
 }
 
-.settings-class h1, label{
+.settings-class h1, label {
     color: black;
 }
 
@@ -235,12 +213,11 @@ select option[value="blessed"]{
     padding: 10px 25px;
 }
 
-
-label{
+label {
     font-size: 25px;
 }
 
-option{
+option {
     padding: 10px 20px;
     font-size: 17px;
 }
@@ -251,59 +228,54 @@ option{
     left: 0;
     width: 300px;
     height: 100%;
-   
     background: rgb(255, 255, 255);
     box-shadow: 1px 1px;
     padding: 20px;
     transition: left 0.3s;
     z-index: 10;
     display: none;
-
-    
 }
 
-.settings-slide-in.open{
-    
+.settings-slide-in.open {
     display: block;
 }
 
-
-body.light{
+body.light {
     background-color: white;
     color: black;
 }
 
-body.dark{
+body.dark {
     background-color: #333;
     color: white;
 }
 
-body.blue{
+body.blue {
     background-color: #1490f5;
     color: white;
 }
 
-body.green{
-     background-color: rgb(29, 211, 29);
-     color: white;
+body.green {
+    background-color: rgb(29, 211, 29);
+    color: white;
 }
 
-body.yellow{
+body.yellow {
     background-color: rgb(243, 243, 19);
     color: black;
 }
 
-body.purple{
+body.purple {
     background-color: rgb(158, 16, 158);
     color: white;
 }
 
-body.pink{
+body.pink {
     background-color: rgb(245, 31, 67);
     color: white;
 }
 
-body.grey{
+body.grey {
     background-color: grey;
     color: white;
 }

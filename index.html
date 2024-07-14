@@ -9,96 +9,70 @@
     <title>todo-app</title>
 </head>
 <body>
-  
-  
-  <nav class="navbar">
-    <a href="#home" onclick="showPage('home')">Home</a>
-    <a href="#settings" onclick="openSettings()">Settings</a>
-    <a href="#profile" onclick="showMyPage('profile')" >My profile</a>
-    
-  </nav>
-  
+    <nav class="navbar">
+        <a href="#home" onclick="showPage('home')">Home</a>
+        <a href="#settings" onclick="openSettings()">Settings</a>
+        <a href="#profile" onclick="showPage('profile')">My profile</a>
+    </nav>
 
- 
-  <div id="todo-app">
-   <h2>Home</h2>
-   <h2 id="date">
-    
-   </h2>
-   <ul id="task-list"></ul>
-   <button class="add-task-btn" onclick="goToProfile">+</button>
-   
-  </div>
+    <div id="todo-app">
+        <h2>Home</h2>
+        <h2 id="date"></h2>
+        <ul id="task-list"></ul>
+        <button class="add-task-btn" onclick="goToProfile()">+</button>
+    </div>
 
-  <div id="profile-page" class="page">
-     <h2>My Profile</h2>
-     <input type="text"  id="new-task" placeholder="Add a new task...">
-     <button onclick="addTask()">Add</button>
-     <button onclick="goHome()">Back to Home</button>
-  </div>
+    <div id="profile-page" class="page" style="display: none;">
+        <h2>My Profile</h2>
+        <input type="text" id="new-task" placeholder="Add a new task...">
+        <button onclick="addTask()">Add</button>
+        <button onclick="goHome()">Back to Home</button>
+    </div>
 
-  <div id="mood-popup" class="popup">
-          <h2>What is your mood today?</h2>
-          <select id="mood-select">
+    <div id="mood-popup" class="popup">
+        <h2>What is your mood today?</h2>
+        <select id="mood-select">
             <option value="sad">Sad</option>
             <option value="happy">Happy</option>
             <option value="angry">Angry</option>
             <option value="confused">Confused</option>
             <option value="silly">Silly</option>
             <option value="blessed">Blessed</option>
-          </select>
-          <button onclick="submitMood()">Submit</button>
-        </div>
-         
-        <div id="quote-popup" class="popup">
-          <h2>Your quote</h2>
-          <p id="quote-text"></p>
-          <button onclick="closeQuote()">Close</button>
-        </div>
+        </select>
+        <button onclick="submitMood()">Submit</button>
+    </div>
 
+    <div id="quote-popup" class="popup">
+        <h2>Your quote</h2>
+        <p id="quote-text"></p>
+        <button onclick="closeQuote()">Close</button>
+    </div>
 
-        
-         
-        
-         <!-- <input type="text" name="text" id="new-task" placeholder="
-          Add new task...">
-          <button class="add" onclick="addTask()">
-            Add
-          </button>
-          <ul id="task-list"></ul>
-        </div> -->
-        
-        
+    <div id="settings-page" class="settings-slide-in">
+        <h2 class="settings-class">Settings</h2>
+        <label for="theme-select">Select Theme:</label>
+        <select id="theme-select" onchange="changeTheme()">
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+            <option value="pink">Pink</option>
+            <option value="grey">Grey</option>
+            <option value="blue">Blue</option>
+            <option value="green">Green</option>
+            <option value="yellow">Yellow</option>
+            <option value="purple">Purple</option>
+        </select>
 
-        <div id="settings-page" class="settings-slide-in">
-          <h2 class="settings-class">Settings</h2>
-          <label for="theme-select">Selete Theme:</label>
-          <select  id="theme-select" onchange="changeTheme()">
-           <option value="light">Light</option>
-           <option value="dark">Dark</option>
-           <option value="pink">Pink</option>
-           <option value="grey">Grey</option>
-           <option value="blue">Blue</option>
-           <option value="green">Green</option>
-           <option value="yellow">Yellow</option>
-           <option value="purple">Purple</option>
-           </select>
-
-           <label for="font-select">Select Font:</label>
-           <select  id="font-select" onchange="changeFont()">
+        <label for="font-select">Select Font:</label>
+        <select id="font-select" onchange="changeFont()">
             <option value="Arial">Arial</option>
             <option value="Georgia">Georgia</option>
             <option value="Courier">Courier</option>
             <option value="Times New Roman">Times New Roman</option>
             <option value="Courier New">Courier New</option>
-          </select>
-          <button class="close" onclick="closeSettings()">Close</button>
-        </div>
+        </select>
+        <button class="close" onclick="closeSettings()">Close</button>
+    </div>
 
-
-
-
-
-        <script src="index.js"></script>
-      </body>
+    <script src="index.js"></script>
+</body>
 </html>
