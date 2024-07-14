@@ -81,7 +81,7 @@ body {
 .add-task-btn {
     font-size: 24px;
     padding: 10px;
-    margin-top: 100px;
+   
     background-color: #072008;
     color: white;
     border-radius: 50%;
@@ -93,7 +93,7 @@ body {
 .page {
     display: none;
     text-align: center;
-    margin: 0 auto;
+    margin: 50px;
 }
 
 
@@ -108,8 +108,13 @@ button:hover {
     background-color: #10232e;
 }
 
+.home{
+    font-weight: bolder;
+    font-size: 30px;
+}
+
 #date {
-    margin-top: 100px;
+    
     font-weight: lighter;
     font-size: 22px;
 }
@@ -235,8 +240,8 @@ option {
     left: 0;
     width: 300px;
     height: 100%;
-    background: rgb(255, 255, 255);
-    box-shadow: 1px 1px;
+    background: rgb(196, 191, 191);
+    box-shadow: 1px solid rgb(150, 148, 148);
     padding: 20px;
     transition: left 0.3s;
     z-index: 10;
