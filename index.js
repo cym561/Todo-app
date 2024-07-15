@@ -171,37 +171,21 @@ noteList.addEventListener('blur', (e) => {
     }
 }, true);
 
+// Settings management
 function openSettings() {
-    document.getElementById('settings-page').classList.add("open");
+    document.getElementById('settings-page').classList.add('open');
 }
 
 function closeSettings() {
-    document.getElementById('settings-page').classList.remove("open");
+    document.getElementById('settings-page').classList.remove('open');
 }
 
-const settingsPage = document.getElementById('settings-page');
-settingsPage.addEventListener("touchstart", (e) => {
-    const startX = e.touches[0].pageX;
-    const startY = e.touches[0].pageY;
-
-    settingsPage.addEventListener("touchmove", (e) => {
-        const endX = e.touches[0].pageX;
-        const endY = e.touches[0].pageY;
-        const diffX = endX - startX;
-        const diffY = endY - startY;
-
-        if (Math.abs(diffX) > Math.abs(diffY) && diffX > 50) {
-            closeSettings();
-        }
-    });
-});
-
 function changeTheme() {
-    let theme = document.getElementById('theme-select').value;
-    document.body.className = theme;
+    var selectedTheme = document.getElementById('theme-select').value;
+    document.body.className = selectedTheme;
 }
 
 function changeFont() {
-    let font = document.getElementById('font-select').value;
-    document.body.style.fontFamily = font;
+    var selectedFont = document.getElementById('font-select').value;
+    document.body.style.fontFamily = selectedFont;
 }
