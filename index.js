@@ -69,6 +69,7 @@ function changeFont(font) {
     document.body.style.fontFamily = font;
 }
 
+
 // JavaScript for Home Page (New Task Popup)
 function showAddTaskPopup() {
     // Show popup for adding a new task
@@ -100,6 +101,9 @@ function addTask() {
         closeAddTaskPopup();
     }
 }
+
+
+// JavaScript for Home Page (New Task Popup)
 
 // Date display
 let dateElement = document.getElementById('date');
