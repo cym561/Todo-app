@@ -136,7 +136,7 @@ saveNoteBtn.addEventListener('click', () => {
         noteInput.value = '';
         const noteElement = document.createElement('li');
         noteElement.textContent = note;
-        noteElement.addEventListener('click', showContextMenu);
+        noteElement.addEventListener('contextmenu', showContextMenu);
         noteList.appendChild(noteElement);
     }
 });
@@ -156,6 +156,7 @@ noteList.addEventListener('mouseup', () => {
 });
 
 function showContextMenu(e) {
+    e.preventDefault();
     const contextMenu = document.getElementById('note-context-menu');
     contextMenu.style.display = 'block';
     contextMenu.style.left = `${e.pageX}px`;
