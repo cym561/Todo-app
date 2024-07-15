@@ -136,54 +136,98 @@ saveNoteBtn.addEventListener('click', () => {
         noteInput.value = '';
         const noteElement = document.createElement('li');
         noteElement.textContent = note;
+        noteElement.addEventListener('click', showContextMenu);
         noteList.appendChild(noteElement);
     }
 });
 
-noteList.addEventListener('click', (e) => {
+let longPressTimeout;
+
+noteList.addEventListener('mousedown', (e) => {
     if (e.target.tagName === 'LI') {
-        const note = e.target.textContent;
-        const index = notes.indexOf(note);
-        if (index !== -1) {
-            notes.splice(index, 1);
-            localStorage.setItem('notes', JSON.stringify(notes));
-            e.target.remove();
-        }
+        longPressTimeout = setTimeout(() => {
+            showContextMenu(e);
+        }, 2000);
     }
 });
 
-noteList.addEventListener('dblclick', (e) => {
-    if (e.target.tagName === 'LI') {
-        e.target.contentEditable = 'true';
-        e.target.focus();
-    }
+noteList.addEventListener('mouseup', () => {
+    clearTimeout(longPressTimeout);
 });
 
-noteList.addEventListener('blur', (e) => {
-    if (e.target.tagName === 'LI') {
-        const note = e.target.textContent;
-        const index = notes.indexOf(note);
-        if (index !== -1) {
-            notes[index] = note;
-            localStorage.setItem('notes', JSON.stringify(notes));
-        }
+function showContextMenu(e) {
+    const contextMenu = document.getElementById('note-context-menu');
+    contextMenu.style.display = 'block';
+    contextMenu.style.left = `${e.pageX}px`;
+    contextMenu.style.top = `${e.pageY}px`;
+
+    // Store the clicked note element for context menu actions
+    contextMenu.currentNote = e.target;
+}
+
+function deleteNote() {
+    const note = document.getElementById('note-context-menu').currentNote;
+    const noteText = note.textContent;
+    const index = notes.indexOf(noteText);
+    if (index !== -1) {
+        notes.splice(index, 1);
+        localStorage.setItem('notes', JSON.stringify(notes));
+        note.remove();
     }
-}, true);
+    closeContextMenu();
+}
+
+function editNote() {
+    const note = document.getElementById('note-context-menu').currentNote;
+    note.contentEditable = true;
+    note.focus();
+    closeContextMenu();
+}
+
+function shareNote() {
+    // Placeholder for sharing functionality
+    alert('Note shared!');
+    closeContextMenu();
+}
+
+function closeContextMenu() {
+    const contextMenu = document.getElementById('note-context-menu');
+    contextMenu.style.display = 'none';
+}
 
 function openSettings() {
-    document.getElementById('settings-page').classList.add('open');
+    document.getElementById('settings-page').classList.add("open");
 }
 
 function closeSettings() {
-    document.getElementById('settings-page').classList.remove('open');
+    document.getElementById('settings-page').classList.remove("open");
 }
 
+const settingsPage = document.getElementById('settings-page');
+settingsPage.addEventListener("touchstart", (e) => {
+    const startX = e.touches[0].pageX;
+    const startY = e.touches[0].pageY;
+
+    settingsPage.addEventListener("touchmove", (e) => {
+        const endX = e.touches[0].pageX;
+        const endY = e.touches[0].pageY;
+        const diffX = endX - startX;
+        const diffY = endY - startY;
+
+        if (Math.abs(diffX) > Math.abs(diffY)) {
+            if (diffX > 50) {
+                closeSettings();
+            }
+        }
+    });
+});
+
 function changeTheme() {
-    var selectedTheme = document.getElementById('theme-select').value;
-    document.body.className = selectedTheme;
+    let theme = document.getElementById('theme-select').value;
+    document.body.className = theme;
 }
 
 function changeFont() {
-    var selectedFont = document.getElementById('font-select').value;
-    document.body.style.fontFamily = selectedFont;
+    let font = document.getElementById('font-select').value;
+    document.body.style.fontFamily = font;
 }
