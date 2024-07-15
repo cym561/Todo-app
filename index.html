@@ -18,29 +18,29 @@
     <div id="todo-app">
         <h2 class="home">Home</h2>
         <h2 id="date"></h2>
-        <button class="add-task-btn" onclick="showAddTaskPopup()">+</button>
+        <ul id="task-list"></ul>
+        <button class="add-task-btn" onclick="goToProfile()">+</button>
     </div>
 
-    <div id="settings-page">
-        <h2 class="settings-class">Settings</h2>
-        <div class="theme-section">
-            <h3>Select Theme:</h3>
-            <ul id="theme-list">
-                <li onclick="changeTheme('light')">Light</li>
-                <li onclick="changeTheme('dark')">Dark</li>
-            </ul>
-        </div>
-        <div class="font-section">
-            <h3>Select Font:</h3>
-            <ul id="font-list">
-                <li onclick="changeFont('Arial')">Arial</li>
-                <li onclick="changeFont('Georgia')">Georgia</li>
-                <li onclick="changeFont('Courier')">Courier</li>
-                <li onclick="changeFont('Times New Roman')">Times New Roman</li>
-                <li onclick="changeFont('Courier New')">Courier New</li>
-            </ul>
-        </div>
-    </div>
+    <div id="profile-page" class="page" style="display: none;">
+        <h2 id="my-tasks" >My Tasks</h2>
+        <input type="text" id="new-task" placeholder="Add a new task...">
+        <p>All tasks added will be displayed on the home page respectively.</p>
+        <button onclick="addTask()">Add</button>
+        <br>
+        <br>
+        <br>
+        <br>
+        <hr>
+        <h2>Add Notes</h2>
+        <textarea id="note-input" placeholder="Enter your notes..."></textarea>
+      <br>
+      <button id="save-note-btn">Save Note</button>
+      <ul id="note-list"></ul>
+       </div> 
+
+    
+  
 
     <div id="mood-popup" class="popup">
         <h2>What is your mood today?</h2>
@@ -59,6 +59,26 @@
         <h2>Your quote</h2>
         <p id="quote-text"></p>
         <button onclick="closeQuote()">Close</button>
+    </div>
+
+    <div id="settings-page" class="settings-slide-in">
+        <h2 class="settings-class">Settings</h2>
+        <label for="theme-select">Select Theme:</label>
+        <select id="theme-select" onchange="changeTheme()">
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+           
+        </select>
+
+        <label for="font-select">Select Font:</label>
+        <select id="font-select" onchange="changeFont()">
+            <option value="Arial">Arial</option>
+            <option value="Georgia">Georgia</option>
+            <option value="Courier">Courier</option>
+            <option value="Times New Roman">Times New Roman</option>
+            <option value="Courier New">Courier New</option>
+        </select>
+        <button class="close" onclick="closeSettings()">Close</button>
     </div>
 
     <script src="index.js"></script>
