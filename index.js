@@ -55,6 +55,7 @@ function closeQuote() {
 function addTask() {
     var taskInput = document.getElementById('new-task');
     var taskText = taskInput.value.trim();
+    
     if (taskText !== "") {
         var taskList = document.getElementById('task-list');
         var listItem = document.createElement('li');
@@ -82,7 +83,6 @@ function addTask() {
         taskInput.value = "";
         updateTaskNumbers();
 
-        // Display success message
         let p = document.querySelector("p");
         p.textContent = "Task added successfully!";
     } else {
@@ -117,7 +117,6 @@ function goHome() {
     showPage('home');
 }
 
-// Note management
 const noteInput = document.getElementById('note-input');
 const saveNoteBtn = document.getElementById('save-note-btn');
 const noteList = document.getElementById('note-list');
@@ -171,7 +170,6 @@ noteList.addEventListener('blur', (e) => {
     }
 }, true);
 
-// Settings management
 function openSettings() {
     document.getElementById('settings-page').classList.add('open');
 }
