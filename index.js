@@ -60,6 +60,9 @@ function addTask() {
         var taskList = document.getElementById('task-list');
         var listItem = document.createElement('li');
 
+        let p = document.querySelector("p");
+        p.innerHTML = "Task added successfully!";
+
         var checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
         checkbox.onchange = function () {
@@ -89,6 +92,9 @@ function addTask() {
     }
 }
 
+
+  
+
 function removeTask(listItem) {
     listItem.parentNode.removeChild(listItem);
     updateTaskNumbers();
@@ -116,28 +122,79 @@ function goHome() {
     showPage('home');
 }
 
-function saveNotes() {
-    var notes = document.getElementById('notes').value.trim();
-    if (notes !== "") {
-        // Here you can save the notes to localStorage, database, or any other storage method.
-        // For example, save to localStorage:
-        localStorage.setItem('userNotes', notes);
-        alert("Notes saved successfully!");
-    } else {
-        alert("Please enter some notes.");
-    }
-}
+const noteInput = document.getElementById('note-input');
+const saveNoteBtn = document.getElementById('save-note-btn');
+const noteList = document.getElementById('note-list');
 
-window.onload = function () {
-    document.getElementById('mood-popup').classList.add('show');
-    
-    // Load saved notes on page load (if any)
-    var savedNotes = localStorage.getItem('userNotes');
-    if (savedNotes) {
-        document.getElementById('notes').value = savedNotes;
-    }
-}
+const notes = localStorage.getItem('notes') ?
+JSON.parse(localStorage.getItem('notes')) : [];
+notes.forEach((note) => {
+    const noteElement = document.createElement('li');
+    noteElement.textContent = note;
 
+    noteList.appendChild(noteElement);
+});
+
+saveNoteBtn.addEventListener('click', () => {
+    const note = noteInput.value;
+    notes.push(note);
+    localStorage.setItem('notes',JSON.stringify(notes));
+    noteInput.value = '';
+    const noteElement = document.createElement('li');
+    noteElement.textContent = note;
+
+    noteList.appendChild(noteElement);
+});
+
+noteList.addEventListener('click', (e) => {
+    if (e.target.tagName === 'LI') {
+        const note = e.target.textContent;
+        const index = notes.indexOf(note);
+        if (index !== -1) {
+            notes.splice(index, 1);
+
+            localStorage.setItem('notes',
+                JSON.stringify(notes)
+            );
+            e.target.remove();
+        }
+    }
+});
+
+noteList.addEventListener('click', (e) => {
+    if (e.target.tagName === 'LI') {
+        const note = e.target.textContent;
+        const index = notes.indexOf(note);
+        if (index !== -1) {
+            notes.splice(index, 1);
+
+            localStorage.setItem('notes',
+                JSON.stringify(notes)
+            );
+            e.target.remove();
+        }
+    }
+});
+
+ noteList.addEventListener('dblclick', (e) => {
+    if (e.target.tagName === 'LI') {
+        e.target.contentEditable = 'true';
+        e.target.focus();
+    }
+ });
+
+ noteList.addEventListener('blur', (e) => {
+    if (e.target.tagName === 'LI') {
+        const note = e.target.textContent;
+        const index = notes.indexOf(note);
+        if (index !== -1) {
+            notes[index] = note;
+
+            localStorage.setItem('notes',
+            JSON.stringify(notes));
+        }
+    }
+ }, true);
 
 function openSettings() {
     document.getElementById('settings-page').classList.add("open");

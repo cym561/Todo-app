@@ -5,7 +5,7 @@ body {
 
 .navbar {
     position: fixed;
-    padding: 15px 20px;
+    padding: 10px 15px;
     bottom: 0;
     width: 100%;
     background-color: #808080;
@@ -56,8 +56,8 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     text-align: center;
     z-index: 10;
-    width: 300px;
-    height: 300px;
+    width: 320px;
+    height: 320px;
 }
 
 .heading {
@@ -84,7 +84,7 @@ body {
     padding: 10px;
    margin-left: 260px;
    margin-top: 200px;
-    background-color: #072008;
+    background-color: #000000;
     color: white;
     border-radius: 50%;
     cursor: pointer;
@@ -129,6 +129,23 @@ p{
     margin: 50px;
 }
 
+#note-list {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 10px;
+    margin-top: 15px;
+    
+    max-width: 150px;
+    height: auto;
+}
+
+#note-list li{
+   background-color: #6d6b6b;
+    border-radius: 10%;
+   color: white;
+   padding: 20px 30px;
+
+}
 
 button {
     margin-top: 10px;
@@ -273,7 +290,7 @@ option {
     left: 0;
     width: 300px;
     height: 100%;
-    background: rgb(196, 191, 191);
+    background: rgb(236, 235, 235);
     box-shadow: 1px solid rgb(150, 148, 148);
     padding: 20px;
     transition: left 0.3s;
