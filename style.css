@@ -45,33 +45,6 @@ body {
     }
 }
 
-/* Context Menu Styles */
-
-#note-context-menu {
-    display: none;
-    position: fixed;
-    background-color: white;
-    border: 1px solid #ccc;
-    padding: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    z-index: 100;
-}
-
-#note-context-menu ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-#note-context-menu li {
-    padding: 8px 12px;
-    cursor: pointer;
-}
-
-#note-context-menu li:hover {
-    background-color: #f0f0f0;
-}
-
 .popup {
     display: none;
     position: fixed;
@@ -109,46 +82,19 @@ body {
 .add-task-btn {
     font-size: 24px;
     padding: 10px;
-   margin-left: 270px;
-   margin-top: 250px;
+    margin-left: 270px;
+    margin-top: 270px;
     background-color: #000000;
     color: white;
     border-radius: 50%;
     cursor: pointer;
-    position: fixed;
+    position: sticky;
     right: 0;
 }
 
-p{
+p {
     margin-top: 9px;
 }
-
-#profile-page textarea {
-    width: 250px;
-    height: 200px;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 16px;
-}
-
-#profile-page input[type="button"], 
-#profile-page button {
-    margin-top: 10px;
-    padding: 10px 20px;
-    background-color: rgb(1, 31, 1);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-#profile-page input[type="button"]:hover, 
-#profile-page button:hover {
-    background-color: #45a049;
-}
-
 
 .page {
     display: none;
@@ -156,143 +102,13 @@ p{
     margin: 50px;
 }
 
-#note-list {
-    display: grid;
-    grid-template-columns: repeat(2,1fr);
-    gap: 10px;
-    margin-top: 15px;
-    
-    max-width: 150px;
-    height: auto;
-}
-
-#note-list li{
-   background-color: #6d6b6b;
-    border-radius: 10%;
-   color: white;
-   padding: 20px 30px;
-   margin-bottom: 20px;
-
-}
-
-button {
-    margin-top: 10px;
-    padding: 10px 20px;
-    background-color: rgb(5, 36, 5);
-    color: white;
-}
-
-button:hover {
-    background-color: #10232e;
-}
-
-.home{
-    font-weight: bolder;
-    font-size: 50px;
-}
-
-#date {
-    
-    font-weight: lighter;
-    font-size: 22px;
-}
-
-select {
-    border: 1px solid #ccc;
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 16px;
-    background-color: #f9f9f9;
-}
-
-select option {
-    padding: 10px;
-    font-size: 16px;
-}
-
-select:focus, button:focus {
-    outline: none;
-    border: 1px solid #1b5475;
-}
-
-select option[value="happy"],
-select option[value="sad"],
-select option[value="silly"],
-select option[value="confused"],
-select option[value="angry"],
-select option[value="blessed"] {
-    background-color: pink;
-}
-
-#quote-text {
-    font-size: 30px;
-    font-weight: bolder;
-    font-style: italic;
-    color: #0e0b0b;
-}
-
-.popup.show {
-    display: block;
-}
-
-#todo-app {
-    text-align: center;
-    margin-top: 190px;
-
-
-}
-
-#new-task {
-    width: calc(100% - 40px);
-    padding: 10px;
-    margin-right: 10px;
-    border: 1px solid #ccc;
-    border-radius: 16px;
-    font-size: 16px;
-}
-
-#task-list {
-    list-style-type: none;
-    padding: 0;
-}
-
-#task-list li {
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-#task-list li button {
-    background-color: #f44336;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-#task-list li button:hover {
-    background-color: #d31f2f;
-}
-
-#task-list li.completed span {
-    text-decoration: line-through;
-    color: #888;
-}
-
-#task-list li input[type="checkbox"] {
-    margin-right: 10px;
-}
-
 .settings-class {
     margin-top: 20px;
     font-size: 36px;
 }
 
-.settings-class h1, label {
+.settings-class h1,
+label {
     color: black;
 }
 
@@ -301,10 +117,6 @@ select option[value="blessed"] {
     color: white;
     margin-top: 10px;
     padding: 10px 25px;
-}
-
-label {
-    font-size: 25px;
 }
 
 option {
@@ -339,5 +151,3 @@ body.dark {
     background-color: #080808;
     color: white;
 }
-
-
