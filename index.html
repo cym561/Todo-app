@@ -23,7 +23,7 @@
     </div>
 
     <div id="profile-page" class="page" style="display: none;">
-        <h2 id="my-tasks" >My Tasks</h2>
+        <h2 id="my-tasks">My Tasks</h2>
         <input type="text" id="new-task" placeholder="Add a new task...">
         <p>All tasks added will be displayed on the home page respectively.</p>
         <button onclick="addTask()">Add</button>
@@ -34,53 +34,48 @@
         <hr>
         <h2>Add Notes</h2>
         <textarea id="note-input" placeholder="Enter your notes..."></textarea>
-      <br>
-      <button id="save-note-btn">Save Note</button>
-      <ul id="note-list"></ul>
-       </div> 
-
-    
-  
+        <br>
+        <button id="save-note-btn">Save Note</button>
+        <ul id="note-list"></ul>
+        <button onclick="goHome()">Go to Home</button>
+    </div>
 
     <div id="mood-popup" class="popup">
-        <h2>What is your mood today?</h2>
+        <h2>Select your mood</h2>
         <select id="mood-select">
-            <option value="sad">Sad</option>
             <option value="happy">Happy</option>
+            <option value="sad">Sad</option>
             <option value="angry">Angry</option>
             <option value="confused">Confused</option>
             <option value="silly">Silly</option>
-            <option value="blessed">Blessed</option>
         </select>
         <button onclick="submitMood()">Submit</button>
     </div>
 
     <div id="quote-popup" class="popup">
-        <h2>Your quote</h2>
         <p id="quote-text"></p>
         <button onclick="closeQuote()">Close</button>
     </div>
 
     <div id="settings-page" class="settings-slide-in">
-        <h2 class="settings-class">Settings</h2>
+        <h2>Settings</h2>
         <label for="theme-select">Select Theme:</label>
         <select id="theme-select" onchange="changeTheme()">
-          <option value="light">Light</option>
-          <option value="dark">Dark</option>
-           
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
         </select>
-
+        <br>
         <label for="font-select">Select Font:</label>
         <select id="font-select" onchange="changeFont()">
             <option value="Arial">Arial</option>
-            <option value="Georgia">Georgia</option>
-            <option value="Courier">Courier</option>
-            <option value="Times New Roman">Times New Roman</option>
             <option value="Courier New">Courier New</option>
+            <option value="Georgia">Georgia</option>
+            <option value="Times New Roman">Times New Roman</option>
+            <option value="Verdana">Verdana</option>
         </select>
-        <button class="close" onclick="closeSettings()">Close</button>
+        <button onclick="closeSettings()">Close</button>
     </div>
-
-    <script src="index.js"></script>
+    
+    <script src="script.js"></script>
 </body>
 </html>

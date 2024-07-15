@@ -1,20 +1,19 @@
-let dateElement = document.getElementById('date');
-
-setInterval(() => {
-    let now = new Date();
-    let formattedDateTime = new Intl.DateTimeFormat('en-US', {
-        weekday: 'short',
-        month: 'short',
-        year: 'numeric',
-        day: 'numeric',
-    }).format(now);
-
-    dateElement.textContent = formattedDateTime;
-}, 1000);
-
 window.onload = function () {
     document.getElementById('mood-popup').classList.add('show');
-}
+
+    let dateElement = document.getElementById('date');
+    setInterval(() => {
+        let now = new Date();
+        let formattedDateTime = new Intl.DateTimeFormat('en-US', {
+            weekday: 'short',
+            month: 'short',
+            year: 'numeric',
+            day: 'numeric',
+        }).format(now);
+
+        dateElement.textContent = formattedDateTime;
+    }, 1000);
+};
 
 function submitMood() {
     let mood = document.getElementById('mood-select').value;
@@ -30,7 +29,7 @@ function showQuote(mood) {
             quoteText = "Keep shining and spreading your happiness!";
             break;
         case 'sad':
-            quoteText = "It's okay to feel sad. Things will get better. Sending love";
+            quoteText = "It's okay to feel sad. Things will get better. Sending love.";
             break;
         case 'angry':
             quoteText = "Take a deep breath and keep moving!";
@@ -60,17 +59,10 @@ function addTask() {
         var taskList = document.getElementById('task-list');
         var listItem = document.createElement('li');
 
-        let p = document.querySelector("p");
-        p.innerHTML = "Task added successfully!";
-
         var checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
         checkbox.onchange = function () {
-            if (checkbox.checked) {
-                listItem.classList.add('completed');
-            } else {
-                listItem.classList.remove('completed');
-            }
+            listItem.classList.toggle('completed', checkbox.checked);
         }
 
         var taskLabel = document.createElement('span');
@@ -89,11 +81,14 @@ function addTask() {
 
         taskInput.value = "";
         updateTaskNumbers();
+
+        // Display success message
+        let p = document.querySelector("p");
+        p.textContent = "Task added successfully!";
+    } else {
+        console.error("Task input is empty.");
     }
 }
-
-
-  
 
 function removeTask(listItem) {
     listItem.parentNode.removeChild(listItem);
@@ -122,42 +117,27 @@ function goHome() {
     showPage('home');
 }
 
+// Note management
 const noteInput = document.getElementById('note-input');
 const saveNoteBtn = document.getElementById('save-note-btn');
 const noteList = document.getElementById('note-list');
 
-const notes = localStorage.getItem('notes') ?
-JSON.parse(localStorage.getItem('notes')) : [];
+const notes = localStorage.getItem('notes') ? JSON.parse(localStorage.getItem('notes')) : [];
 notes.forEach((note) => {
     const noteElement = document.createElement('li');
     noteElement.textContent = note;
-
     noteList.appendChild(noteElement);
 });
 
 saveNoteBtn.addEventListener('click', () => {
     const note = noteInput.value;
-    notes.push(note);
-    localStorage.setItem('notes',JSON.stringify(notes));
-    noteInput.value = '';
-    const noteElement = document.createElement('li');
-    noteElement.textContent = note;
-
-    noteList.appendChild(noteElement);
-});
-
-noteList.addEventListener('click', (e) => {
-    if (e.target.tagName === 'LI') {
-        const note = e.target.textContent;
-        const index = notes.indexOf(note);
-        if (index !== -1) {
-            notes.splice(index, 1);
-
-            localStorage.setItem('notes',
-                JSON.stringify(notes)
-            );
-            e.target.remove();
-        }
+    if (note.trim() !== '') {
+        notes.push(note);
+        localStorage.setItem('notes', JSON.stringify(notes));
+        noteInput.value = '';
+        const noteElement = document.createElement('li');
+        noteElement.textContent = note;
+        noteList.appendChild(noteElement);
     }
 });
 
@@ -167,34 +147,29 @@ noteList.addEventListener('click', (e) => {
         const index = notes.indexOf(note);
         if (index !== -1) {
             notes.splice(index, 1);
-
-            localStorage.setItem('notes',
-                JSON.stringify(notes)
-            );
+            localStorage.setItem('notes', JSON.stringify(notes));
             e.target.remove();
         }
     }
 });
 
- noteList.addEventListener('dblclick', (e) => {
+noteList.addEventListener('dblclick', (e) => {
     if (e.target.tagName === 'LI') {
         e.target.contentEditable = 'true';
         e.target.focus();
     }
- });
+});
 
- noteList.addEventListener('blur', (e) => {
+noteList.addEventListener('blur', (e) => {
     if (e.target.tagName === 'LI') {
         const note = e.target.textContent;
         const index = notes.indexOf(note);
         if (index !== -1) {
             notes[index] = note;
-
-            localStorage.setItem('notes',
-            JSON.stringify(notes));
+            localStorage.setItem('notes', JSON.stringify(notes));
         }
     }
- }, true);
+}, true);
 
 function openSettings() {
     document.getElementById('settings-page').classList.add("open");
@@ -215,10 +190,8 @@ settingsPage.addEventListener("touchstart", (e) => {
         const diffX = endX - startX;
         const diffY = endY - startY;
 
-        if (Math.abs(diffX) > Math.abs(diffY)) {
-            if (diffX > 50) {
-                closeSettings();
-            }
+        if (Math.abs(diffX) > Math.abs(diffY) && diffX > 50) {
+            closeSettings();
         }
     });
 });
@@ -232,4 +205,3 @@ function changeFont() {
     let font = document.getElementById('font-select').value;
     document.body.style.fontFamily = font;
 }
- 
