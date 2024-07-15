@@ -231,3 +231,4 @@ function changeFont() {
     let font = document.getElementById('font-select').value;
     document.body.style.fontFamily = font;
 }
+
