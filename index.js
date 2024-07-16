@@ -99,15 +99,20 @@ function addTask() {
         addTaskToList(taskText, taskTime);
         taskInput.value = "";
         taskTimeInput.value = "";
+        
+
     }
 }
 
-  
+
+
 
 function addTaskToList(taskText, taskTime) {
     const taskList = document.getElementById('task-list');
     const listItem = createTaskElement(taskText, taskTime);
     taskList.appendChild(listItem);
+    
+
     
     updateTaskNumbers();
     setTaskNotification(taskText, taskTime);
@@ -130,7 +135,8 @@ function createTaskElement(taskText, taskTime) {
     };
 
     const taskLabel = document.createElement('span');
-    taskLabel.textContent = `${taskText}  ${taskTime}`;
+    const formattedTime = formatTimeWithAMPM(taskTime);
+    taskLabel.textContent = `${taskText} at ${formattedTime}`;
 
     const removeButton = document.createElement('button');
     removeButton.textContent = 'Remove';
@@ -145,6 +151,7 @@ function createTaskElement(taskText, taskTime) {
     listItem.appendChild(removeButton);
     return listItem;
 }
+
 
 // Remove task from list
 function removeTask(listItem) {
