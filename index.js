@@ -94,7 +94,8 @@ function addTask() {
     const taskTimeInput = document.getElementById('task-time');
     const taskText = taskInput.value.trim();
     const taskTime = taskTimeInput.value;
-
+   let p = document.querySelector('p');
+   p.innerHTML = "Task added successfuly!";
     if (taskText && taskTime) {
         addTaskToList(taskText, taskTime);
         taskInput.value = "";
@@ -135,8 +136,8 @@ function createTaskElement(taskText, taskTime) {
     };
 
     const taskLabel = document.createElement('span');
-    const formattedTime = formatTimeWithAMPM(taskTime);
-    taskLabel.textContent = `${taskText} at ${formattedTime}`;
+    
+    taskLabel.textContent = `${taskText} at ${taskTime}`;
 
     const removeButton = document.createElement('button');
     removeButton.textContent = 'Remove';
