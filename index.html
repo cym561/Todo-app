@@ -23,21 +23,25 @@
     </div>
 
     <div id="profile-page" class="page" style="display: none;">
-        <h2 id="my-tasks" >My Tasks</h2>
+        <h2 id="my-tasks">My Tasks</h2>
         <input type="text" id="new-task" placeholder="Add a new task...">
+        <input type="time" id="task-time" placeholder="Select time">
         <p>All tasks added will be displayed on the home page respectively.</p>
         <button onclick="addTask()">Add</button>
-        <br>
-        <br>
-        <br>
-        <br>
+        <br><br><br><br><hr>
+        
+        <h2>Recent</h2>
+        <ul id="recent-tasks"></ul>
+        <button id="delete-selected-btn" style="display: none;" onclick="deleteSelectedTasks()">🗑️ Delete Selected</button>
         <hr>
+        
         <h2>Add Notes</h2>
         <textarea id="note-input" placeholder="Enter your notes..."></textarea>
-      <br>
-      <button id="save-note-btn">Save Note</button>
-      <ul id="note-list"></ul>
-       </div> 
+        <br>
+        <button id="save-note-btn">Save Note</button>
+        <ul id="note-list"></ul>
+    </div>
+    
 
     
   

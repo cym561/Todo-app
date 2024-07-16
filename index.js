@@ -1,3 +1,5 @@
+
+
 let dateElement = document.getElementById('date');
 
 setInterval(() => {
@@ -12,9 +14,29 @@ setInterval(() => {
     dateElement.textContent = formattedDateTime;
 }, 1000);
 
-window.onload = function () {
-    document.getElementById('mood-popup').classList.add('show');
+
+
+
+// Function to show the mood popup if it hasn't been shown today
+function checkAndShowMoodPopup() {
+    const lastShownDate = localStorage.getItem('moodPopupShownDate');
+    const today = new Date().toDateString();
+
+    if (lastShownDate !== today) {
+        document.getElementById('mood-popup').classList.add('show');
+        localStorage.setItem('moodPopupShownDate', today);
+    }
 }
+
+window.onload = function () {
+    checkAndShowMoodPopup();
+
+    if (Notification.permission !== "granted") {
+        Notification.requestPermission();
+    }
+
+    loadTasksFromLocalStorage();
+};
 
 function submitMood() {
     let mood = document.getElementById('mood-select').value;
@@ -30,7 +52,7 @@ function showQuote(mood) {
             quoteText = "Keep shining and spreading your happiness!";
             break;
         case 'sad':
-            quoteText = "It's okay to feel sad. Things will get better. Sending love";
+            quoteText = "It's okay to feel sad. Things will get better. Sending love.";
             break;
         case 'angry':
             quoteText = "Take a deep breath and keep moving!";
@@ -55,13 +77,22 @@ function closeQuote() {
 
 function addTask() {
     var taskInput = document.getElementById('new-task');
+    var taskTimeInput = document.getElementById('task-time');
     var taskText = taskInput.value.trim();
-    if (taskText !== "") {
+    var taskTime = taskTimeInput.value;
+
+    if (taskText !== "" && taskTime !== "") {
         var taskList = document.getElementById('task-list');
         var listItem = document.createElement('li');
 
-        let p = document.querySelector("p");
-        p.innerHTML = "Task added successfully!";
+        var p = document.querySelector("p");
+        if (p) {
+            p.innerHTML = "Task added successfully!";
+        } else {
+            p = document.createElement('p');
+            p.innerHTML = "Task added successfully!";
+            document.body.appendChild(p);
+        }
 
         var checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
@@ -71,10 +102,10 @@ function addTask() {
             } else {
                 listItem.classList.remove('completed');
             }
-        }
+        };
 
         var taskLabel = document.createElement('span');
-        taskLabel.textContent = taskText;
+        taskLabel.textContent = taskText + " at " + taskTime;
 
         var removeButton = document.createElement('button');
         removeButton.textContent = 'Remove';
@@ -82,22 +113,32 @@ function addTask() {
             removeTask(listItem);
         };
 
+        listItem.setAttribute('data-task-text', taskText); // Store the original task text
+        listItem.setAttribute('data-task-time', taskTime); // Store the task time
         listItem.appendChild(checkbox);
         listItem.appendChild(taskLabel);
         listItem.appendChild(removeButton);
         taskList.appendChild(listItem);
 
         taskInput.value = "";
+        taskTimeInput.value = "";
         updateTaskNumbers();
+
+        // Set up notification
+        setTaskNotification(taskText, taskTime);
+
+        // Add to recent tasks
+        addToRecentTasks(taskText, taskTime, false);
+
+        // Save to localStorage
+        saveTasksToLocalStorage();
     }
 }
-
-
-  
 
 function removeTask(listItem) {
     listItem.parentNode.removeChild(listItem);
     updateTaskNumbers();
+    saveTasksToLocalStorage();
 }
 
 function updateTaskNumbers() {
@@ -105,132 +146,127 @@ function updateTaskNumbers() {
     var tasks = taskList.getElementsByTagName('li');
     for (var i = 0; i < tasks.length; i++) {
         var taskLabel = tasks[i].getElementsByTagName('span')[0];
-        taskLabel.textContent = (i + 1) + ". " + taskLabel.textContent.split('. ')[1];
+        var originalText = tasks[i].getAttribute('data-task-text'); // Get the original task text
+        var taskTime = tasks[i].getAttribute('data-task-time'); // Get the task time
+        taskLabel.textContent = (i + 1) + ". " + originalText + " at " + taskTime; // Update with original task text and time
     }
 }
 
-function showPage(page) {
-    document.getElementById('todo-app').style.display = page === 'home' ? 'block' : 'none';
-    document.getElementById('profile-page').style.display = page === 'profile' ? 'block' : 'none';
-}
+function setTaskNotification(taskText, taskTime) {
+    var now = new Date();
+    var [hours, minutes] = taskTime.split(':').map(Number);
+    var taskDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes);
 
-function goToProfile() {
-    showPage('profile');
-}
+    // Calculate the time difference in milliseconds
+    var timeDifference = taskDate.getTime() - now.getTime() - 10 * 60 * 1000; // 10 minutes before the task time
 
-function goHome() {
-    showPage('home');
-}
-
-const noteInput = document.getElementById('note-input');
-const saveNoteBtn = document.getElementById('save-note-btn');
-const noteList = document.getElementById('note-list');
-
-const notes = localStorage.getItem('notes') ?
-JSON.parse(localStorage.getItem('notes')) : [];
-notes.forEach((note) => {
-    const noteElement = document.createElement('li');
-    noteElement.textContent = note;
-
-    noteList.appendChild(noteElement);
-});
-
-saveNoteBtn.addEventListener('click', () => {
-    const note = noteInput.value;
-    notes.push(note);
-    localStorage.setItem('notes',JSON.stringify(notes));
-    noteInput.value = '';
-    const noteElement = document.createElement('li');
-    noteElement.textContent = note;
-
-    noteList.appendChild(noteElement);
-});
-
-noteList.addEventListener('click', (e) => {
-    if (e.target.tagName === 'LI') {
-        const note = e.target.textContent;
-        const index = notes.indexOf(note);
-        if (index !== -1) {
-            notes.splice(index, 1);
-
-            localStorage.setItem('notes',
-                JSON.stringify(notes)
-            );
-            e.target.remove();
-        }
+    if (timeDifference > 0) {
+        setTimeout(() => {
+            alert(`Reminder: Your task "${taskText}" is in 10 minutes!`);
+        }, timeDifference);
     }
-});
-
-noteList.addEventListener('click', (e) => {
-    if (e.target.tagName === 'LI') {
-        const note = e.target.textContent;
-        const index = notes.indexOf(note);
-        if (index !== -1) {
-            notes.splice(index, 1);
-
-            localStorage.setItem('notes',
-                JSON.stringify(notes)
-            );
-            e.target.remove();
-        }
-    }
-});
-
- noteList.addEventListener('dblclick', (e) => {
-    if (e.target.tagName === 'LI') {
-        e.target.contentEditable = 'true';
-        e.target.focus();
-    }
- });
-
- noteList.addEventListener('blur', (e) => {
-    if (e.target.tagName === 'LI') {
-        const note = e.target.textContent;
-        const index = notes.indexOf(note);
-        if (index !== -1) {
-            notes[index] = note;
-
-            localStorage.setItem('notes',
-            JSON.stringify(notes));
-        }
-    }
- }, true);
-
-function openSettings() {
-    document.getElementById('settings-page').classList.add("open");
 }
 
-function closeSettings() {
-    document.getElementById('settings-page').classList.remove("open");
-}
+function addToRecentTasks(taskText, taskTime, completed) {
+    const recentTasks = document.getElementById('recent-tasks');
+    const listItem = document.createElement('li');
+    listItem.setAttribute('data-task-text', taskText);
+    listItem.setAttribute('data-task-time', taskTime);
+    listItem.classList.add('recent-task-item');
 
-const settingsPage = document.getElementById('settings-page');
-settingsPage.addEventListener("touchstart", (e) => {
-    const startX = e.touches[0].pageX;
-    const startY = e.touches[0].pageY;
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.checked = completed;
+    checkbox.disabled = true;
 
-    settingsPage.addEventListener("touchmove", (e) => {
-        const endX = e.touches[0].pageX;
-        const endY = e.touches[0].pageY;
-        const diffX = endX - startX;
-        const diffY = endY - startY;
+    const taskLabel = document.createElement('span');
+    taskLabel.textContent = taskText + " at " + taskTime;
 
-        if (Math.abs(diffX) > Math.abs(diffY)) {
-            if (diffX > 50) {
-                closeSettings();
-            }
-        }
+    listItem.appendChild(checkbox);
+    listItem.appendChild(taskLabel);
+    recentTasks.appendChild(listItem);
+
+    // Set auto-delete after two days
+    setTimeout(() => {
+        listItem.remove();
+        saveTasksToLocalStorage();
+    }, 2 * 24 * 60 * 60 * 1000);
+
+    // Add click event to enable checkboxes for deletion
+    listItem.addEventListener('click', () => {
+        const checkboxes = recentTasks.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
+            checkbox.disabled = false;
+            document.getElementById('delete-selected-btn').style.display = 'block';
+        });
     });
-});
-
-function changeTheme() {
-    let theme = document.getElementById('theme-select').value;
-    document.body.className = theme;
 }
 
-function changeFont() {
-    let font = document.getElementById('font-select').value;
-    document.body.style.fontFamily = font;
+function deleteSelectedTasks() {
+    const checkboxes = document.querySelectorAll('#recent-tasks input[type="checkbox"]:checked');
+    checkboxes.forEach(checkbox => {
+        const listItem = checkbox.parentElement;
+        listItem.remove();
+    });
+    saveTasksToLocalStorage();
+    document.getElementById('delete-selected-btn').style.display = 'none';
 }
- 
 
+function saveTasksToLocalStorage() {
+    const tasks = [];
+    const taskItems = document.querySelectorAll('#task-list li');
+    taskItems.forEach(item => {
+        const taskText = item.getAttribute('data-task-text');
+        const taskTime = item.getAttribute('data-task-time');
+        const completed = item.classList.contains('completed');
+        tasks.push({ taskText, taskTime, completed });
+    });
+
+    const recentTaskItems = document.querySelectorAll('#recent-tasks li');
+    recentTaskItems.forEach(item => {
+        const taskText = item.getAttribute('data-task-text');
+        const taskTime = item.getAttribute('data-task-time');
+        const completed = item.querySelector('input[type="checkbox"]').checked;
+        tasks.push({ taskText, taskTime, completed });
+    });
+
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+function loadTasksFromLocalStorage() {
+    const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    tasks.forEach(task => {
+        addToRecentTasks(task.taskText, task.taskTime, task.completed);
+
+        const taskList = document.getElementById('task-list');
+        const listItem = document.createElement('li');
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.checked = task.completed;
+        checkbox.onchange = function () {
+            if (checkbox.checked) {
+                listItem.classList.add('completed');
+            } else {
+                listItem.classList.remove('completed');
+            }
+            saveTasksToLocalStorage();
+        };
+
+        const taskLabel = document.createElement('span');
+        taskLabel.textContent = task.taskText + " at " + task.taskTime;
+
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'Remove';
+        removeButton.onclick = function () {
+            removeTask(listItem);
+        };
+
+        listItem.setAttribute('data-task-text', task.taskText);
+        listItem.setAttribute('data-task-time', task.taskTime);
+        listItem.appendChild(checkbox);
+        listItem.appendChild(taskLabel);
+        listItem.appendChild(removeButton);
+        taskList.appendChild(listItem);
+    });
+    updateTaskNumbers();
+}
