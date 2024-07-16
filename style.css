@@ -292,7 +292,7 @@ option {
     width: 300px;
     height: 100%;
     background: rgb(236, 235, 235);
-    box-shadow: 1px solid rgb(150, 148, 148);
+    box-shadow: 1px solid rgb(247, 244, 244);
     padding: 20px;
     transition: left 0.3s;
     z-index: 10;

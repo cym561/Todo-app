@@ -23,7 +23,24 @@ function checkAndShowMoodPopup() {
     }
 }
 
-function showPage(page) {
+ function showPage(page) {
+    document.getElementById('todo-app').style.display = page === 'home' ?
+    'block' : 'none';
+
+
+    document.getElementById('profile-page').style.display = page === 'profile' ?
+    'block' : 'none';
+ }
+
+function goToProfile() {
+  showPage('profile');
+}
+
+ function goHome(){
+    showPage('home');
+ }
+
+/* function showPage(page) {
     const homePage = document.getElementById('todo-app');
     const tasksPage = document.getElementById('profile-page');
 
@@ -35,16 +52,16 @@ function showPage(page) {
         tasksPage.style.display = 'block';
         loadTasksFromLocalStorage(); // Load tasks when switching to tasks page
     }
-}
+}*/
 
 function openSettings() {
     const settingsPage = document.getElementById('settings-page');
-    settingsPage.classList.add('show'); // Ensure 'show' class is defined in CSS for visibility
+    settingsPage.classList.add("open"); // Ensure 'show' class is defined in CSS for visibility
 }
 
 function closeSettings() {
     const settingsPage = document.getElementById('settings-page');
-    settingsPage.classList.remove('show');
+    settingsPage.classList.remove("open");
 }
 
 
@@ -85,11 +102,13 @@ function addTask() {
     }
 }
 
-// Add a task to the task list
+  
+
 function addTaskToList(taskText, taskTime) {
     const taskList = document.getElementById('task-list');
     const listItem = createTaskElement(taskText, taskTime);
     taskList.appendChild(listItem);
+    
     updateTaskNumbers();
     setTaskNotification(taskText, taskTime);
     addToRecentTasks(taskText, taskTime, false);
@@ -111,7 +130,7 @@ function createTaskElement(taskText, taskTime) {
     };
 
     const taskLabel = document.createElement('span');
-    taskLabel.textContent = `${taskText} at ${taskTime}`;
+    taskLabel.textContent = `${taskText}  ${taskTime}`;
 
     const removeButton = document.createElement('button');
     removeButton.textContent = 'Remove';
@@ -142,7 +161,7 @@ function updateTaskNumbers() {
         const taskLabel = tasks[i].getElementsByTagName('span')[0];
         const originalText = tasks[i].getAttribute('data-task-text');
         const taskTime = tasks[i].getAttribute('data-task-time');
-        taskLabel.textContent = `${i + 1}. ${originalText} at ${taskTime}`;
+        taskLabel.textContent = `${i + 1}. ${originalText}  ${taskTime}`;
     }
 }
 
