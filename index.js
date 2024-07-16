@@ -257,7 +257,9 @@ function loadTasksFromLocalStorage() {
     });
 }
 
-
+window.onload = function() {
+    loadTasksFromLocalStorage();
+};
 
 
 
