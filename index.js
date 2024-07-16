@@ -23,24 +23,30 @@ function checkAndShowMoodPopup() {
     }
 }
 
-// Function to show the "My Tasks" page
 function showPage(page) {
-    const pages = document.querySelectorAll('.page');
-    pages.forEach(p => {
-        p.style.display = 'none';
-    });
-    document.getElementById(`${page}-page`).style.display = 'block';
+    const homePage = document.getElementById('todo-app');
+    const tasksPage = document.getElementById('profile-page');
+
+    if (page === 'home') {
+        homePage.style.display = 'block';
+        tasksPage.style.display = 'none';
+    } else if (page === 'tasks') {
+        homePage.style.display = 'none';
+        tasksPage.style.display = 'block';
+        loadTasksFromLocalStorage(); // Load tasks when switching to tasks page
+    }
 }
 
-// Function to open the settings page
 function openSettings() {
-    document.getElementById('settings-page').classList.add('show');
+    const settingsPage = document.getElementById('settings-page');
+    settingsPage.classList.add('show'); // Ensure 'show' class is defined in CSS for visibility
 }
 
-// Function to close the settings page
 function closeSettings() {
-    document.getElementById('settings-page').classList.remove('show');
+    const settingsPage = document.getElementById('settings-page');
+    settingsPage.classList.remove('show');
 }
+
 
 // Function to change the theme
 function changeTheme() {

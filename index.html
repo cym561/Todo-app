@@ -10,15 +10,15 @@
 </head>
 <body>
     <nav class="navbar">
-        <a href="#home" onclick="showPage('home')">Home</a>
-        <a href="#profile" onclick="showPage('profile')">My Tasks</a>
-        <a href="#settings" onclick="openSettings()">Settings</a>
+        <a href="#" onclick="showPage('home')">Home</a>
+        <a href="#" onclick="showPage('tasks')">My Tasks</a> <!-- Link to tasks page -->
+        <a href="#" onclick="openSettings()">Settings</a>
     </nav>
 
     <div id="todo-app">
         <h2 class="home">Home</h2>
         <h2 id="date"></h2>
-        <ul id="task-list"></ul>
+        <!-- Other home page content -->
         <button class="add-task-btn" onclick="goToProfile()">+</button>
     </div>
 
@@ -41,9 +41,8 @@
         <button id="save-note-btn">Save Note</button>
         <ul id="note-list"></ul>
     </div>
-    
 
-        <div id="mood-popup" class="popup">
+    <div id="mood-popup" class="popup">
         <h2>What is your mood today?</h2>
         <select id="mood-select">
             <option value="sad">Sad</option>
@@ -66,9 +65,8 @@
         <h2 class="settings-class">Settings</h2>
         <label for="theme-select">Select Theme:</label>
         <select id="theme-select" onchange="changeTheme()">
-          <option value="light">Light</option>
-          <option value="dark">Dark</option>
-           
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
         </select>
 
         <label for="font-select">Select Font:</label>
