@@ -161,7 +161,7 @@ function updateTaskNumbers() {
         const taskLabel = tasks[i].getElementsByTagName('span')[0];
         const originalText = tasks[i].getAttribute('data-task-text');
         const taskTime = tasks[i].getAttribute('data-task-time');
-        taskLabel.textContent = `${i + 1}. ${originalText}  ${taskTime}`;
+        taskLabel.textContent = `${i + 1}. ${originalText} at ${taskTime}`;
     }
 }
 
