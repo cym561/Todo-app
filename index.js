@@ -1,6 +1,5 @@
 let dateElement = document.getElementById('date');
 
-// Display the current date and time
 setInterval(() => {
     let now = new Date();
     let formattedDateTime = new Intl.DateTimeFormat('en-US', {
@@ -9,6 +8,7 @@ setInterval(() => {
         year: 'numeric',
         day: 'numeric',
     }).format(now);
+
     dateElement.textContent = formattedDateTime;
 }, 1000);
 
@@ -18,12 +18,59 @@ function checkAndShowMoodPopup() {
     const today = new Date().toDateString();
 
     if (lastShownDate !== today) {
-        document.getElementById('mood-popup').style.display = 'block';
+        document.getElementById('mood-popup').classList.add('show');
         localStorage.setItem('moodPopupShownDate', today);
     }
 }
 
- function showPage(page) {
+window.onload = function () {
+    checkAndShowMoodPopup();
+
+    if (Notification.permission !== "granted") {
+        Notification.requestPermission();
+    }
+
+    loadTasksFromLocalStorage();
+};
+
+function submitMood() {
+    let mood = document.getElementById('mood-select').value;
+    console.log('mood selected:', mood);
+    document.getElementById('mood-popup').classList.remove('show');
+    showQuote(mood);
+}
+
+function showQuote(mood) {
+    let quoteText;
+    switch (mood) {
+        case 'happy':
+            quoteText = "Keep shining and spreading your happiness!";
+            break;
+        case 'sad':
+            quoteText = "It's okay to feel sad. Things will get better. Sending love.";
+            break;
+        case 'angry':
+            quoteText = "Take a deep breath and keep moving!";
+            break;
+        case 'confused':
+            quoteText = "Clarity will come. Just give your head some time!";
+            break;
+        case 'silly':
+            quoteText = "Embrace your silliness and enjoy the moment!";
+            break;
+        default:
+            quoteText = "Have a great day!";
+    }
+
+    document.getElementById('quote-text').innerText = quoteText;
+    document.getElementById('quote-popup').classList.add('show');
+}
+
+function closeQuote() {
+    document.getElementById('quote-popup').classList.remove('show');
+}
+
+function showPage(page) {
     document.getElementById('todo-app').style.display = page === 'home' ?
     'block' : 'none';
 
@@ -40,19 +87,7 @@ function goToProfile() {
     showPage('home');
  }
 
-/* function showPage(page) {
-    const homePage = document.getElementById('todo-app');
-    const tasksPage = document.getElementById('profile-page');
 
-    if (page === 'home') {
-        homePage.style.display = 'block';
-        tasksPage.style.display = 'none';
-    } else if (page === 'tasks') {
-        homePage.style.display = 'none';
-        tasksPage.style.display = 'block';
-        loadTasksFromLocalStorage(); // Load tasks when switching to tasks page
-    }
-}*/
 
 function openSettings() {
     const settingsPage = document.getElementById('settings-page');
@@ -77,114 +112,106 @@ function changeFont() {
     document.body.style.fontFamily = selectedFont;
 }
 
-// Initialize tasks and notifications
-window.onload = function () {
-    checkAndShowMoodPopup();
 
-    if (Notification.permission !== "granted") {
-        Notification.requestPermission();
-    }
 
-    loadTasksFromLocalStorage();
-};
-
-// Add task to the task list
 function addTask() {
-    const taskInput = document.getElementById('new-task');
-    const taskTimeInput = document.getElementById('task-time');
-    const taskText = taskInput.value.trim();
-    const taskTime = taskTimeInput.value;
+    var taskInput = document.getElementById('new-task');
+    var taskTimeInput = document.getElementById('task-time');
+    var taskTimePeriodInput = document.getElementById('task-time-period');
+    var taskText = taskInput.value.trim();
+    var taskTime = taskTimeInput.value;
 
-    if (taskText && taskTime) {
-        addTaskToList(taskText, taskTime);
+      //+ " " + taskTimePeriodInput.value;
+
+    if (taskText !== "" && taskTime !== "") {
+        var taskList = document.getElementById('task-list');
+        var listItem = document.createElement('li');
+       taskInput.value = "";
+        taskTimeInput.value= "";
+        var p = document.querySelector("p");
+        
+            p.innerHTML = "Task added successfully!";
+       
+
+        var checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.onchange = function () {
+            if (checkbox.checked) {
+                listItem.classList.add('completed');
+            } else {
+                listItem.classList.remove('completed');
+            }
+        };
+
+        var taskLabel = document.createElement('span');
+        taskLabel.textContent = taskText + " at " + taskTime;
+
+        var removeButton = document.createElement('button');
+        removeButton.textContent = 'Remove';
+        removeButton.onclick = function () {
+            removeTask(listItem);
+        };
+
+        listItem.setAttribute('data-task-text', taskText); // Store the original task text
+        listItem.setAttribute('data-task-time', taskTime); // Store the task time
+        listItem.appendChild(checkbox);
+        listItem.appendChild(taskLabel);
+        listItem.appendChild(removeButton);
+        taskList.appendChild(listItem);
+
         taskInput.value = "";
         taskTimeInput.value = "";
-    }
-}
+      //  taskTimePeriodInput.value = "AM"; // Reset to default
+        updateTaskNumbers();
 
-  
+        // Set up notification
+        setTaskNotification(taskText, taskTime);
 
-function addTaskToList(taskText, taskTime) {
-    const taskList = document.getElementById('task-list');
-    const listItem = createTaskElement(taskText, taskTime);
-    taskList.appendChild(listItem);
-    
-    updateTaskNumbers();
-    setTaskNotification(taskText, taskTime);
-    addToRecentTasks(taskText, taskTime, false);
-    saveTasksToLocalStorage();
-}
+        // Add to recent tasks
+        addToRecentTasks(taskText, taskTime, false);
 
-// Create task list item
-function createTaskElement(taskText, taskTime) {
-    const listItem = document.createElement('li');
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.onchange = function () {
-        if (checkbox.checked) {
-            listItem.classList.add('completed');
-        } else {
-            listItem.classList.remove('completed');
-        }
+        // Save to localStorage
         saveTasksToLocalStorage();
-    };
-
-    const taskLabel = document.createElement('span');
-    taskLabel.textContent = `${taskText}  ${taskTime}`;
-
-    const removeButton = document.createElement('button');
-    removeButton.textContent = 'Remove';
-    removeButton.onclick = function () {
-        removeTask(listItem);
-    };
-
-    listItem.setAttribute('data-task-text', taskText);
-    listItem.setAttribute('data-task-time', taskTime);
-    listItem.appendChild(checkbox);
-    listItem.appendChild(taskLabel);
-    listItem.appendChild(removeButton);
-    return listItem;
+    }
 }
 
-// Remove task from list
 function removeTask(listItem) {
-    listItem.remove();
+    listItem.parentNode.removeChild(listItem);
     updateTaskNumbers();
     saveTasksToLocalStorage();
 }
 
-// Update task numbers in list
 function updateTaskNumbers() {
-    const taskList = document.getElementById('task-list');
-    const tasks = taskList.getElementsByTagName('li');
-    for (let i = 0; i < tasks.length; i++) {
-        const taskLabel = tasks[i].getElementsByTagName('span')[0];
-        const originalText = tasks[i].getAttribute('data-task-text');
-        const taskTime = tasks[i].getAttribute('data-task-time');
-        taskLabel.textContent = `${i + 1}. ${originalText}  ${taskTime}`;
+    var taskList = document.getElementById('task-list');
+    var tasks = taskList.getElementsByTagName('li');
+    for (var i = 0; i < tasks.length; i++) {
+        var taskLabel = tasks[i].getElementsByTagName('span')[0];
+        var originalText = tasks[i].getAttribute('data-task-text'); // Get the original task text
+        var taskTime = tasks[i].getAttribute('data-task-time'); // Get the task time
+        taskLabel.textContent = (i + 1) + ". " + originalText + " at " + taskTime; // Update with original task text and time
     }
 }
 
-// Set a notification for the task
 function setTaskNotification(taskText, taskTime) {
-    const now = new Date();
-    const [hours, minutes] = taskTime.split(':').map(Number);
-    const taskDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes);
+    var now = new Date();
+    var [time, period] = taskTime.split(' ');
+    var [hours, minutes] = time.split(':').map(Number);
 
-    const timeDifference = taskDate.getTime() - now.getTime() - 10 * 60 * 1000; // 10 minutes before the task time
+    if (period === 'PM' && hours < 12) hours += 12;
+    if (period === 'AM' && hours === 12) hours = 0;
+
+    var taskDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes);
+
+    // Calculate the time difference in milliseconds
+    var timeDifference = taskDate.getTime() - now.getTime() - 10 * 60 * 1000; // 10 minutes before the task time
 
     if (timeDifference > 0) {
         setTimeout(() => {
-            if (Notification.permission === "granted") {
-                new Notification`(Reminder: Your task "${taskText}" is in 10 minutes!)`;
-            } else {
-                alert`(Reminder: Your task "${taskText}" is in 10 minutes!)`;
-            }
+            alert(`Reminder: Your task "${taskText}" is in 10 minutes!`);
         }, timeDifference);
     }
 }
 
-// Add task to the "Recent" section
 function addToRecentTasks(taskText, taskTime, completed) {
     const recentTasks = document.getElementById('recent-tasks');
     const listItem = document.createElement('li');
@@ -198,26 +225,28 @@ function addToRecentTasks(taskText, taskTime, completed) {
     checkbox.disabled = true;
 
     const taskLabel = document.createElement('span');
-    taskLabel.textContent = `${taskText} at ${taskTime}`;
+    taskLabel.textContent = `${taskText}  at  ${taskTime}`;
 
     listItem.appendChild(checkbox);
     listItem.appendChild(taskLabel);
     recentTasks.appendChild(listItem);
 
+    // Set auto-delete after two days
     setTimeout(() => {
         listItem.remove();
         saveTasksToLocalStorage();
-    }, 2 * 24 * 60 * 60 * 1000); // Auto-delete after two days
+    }, 2 * 24 * 60 * 60 * 1000);
 
+    // Add click event to enable checkboxes for deletion
     listItem.addEventListener('click', () => {
-        recentTasks.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+        const checkboxes = recentTasks.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
             checkbox.disabled = false;
+            document.getElementById('delete-selected-btn').style.display = 'block';
         });
-        document.getElementById('delete-selected-btn').style.display = 'block';
     });
 }
 
-// Delete selected tasks
 function deleteSelectedTasks() {
     const checkboxes = document.querySelectorAll('#recent-tasks input[type="checkbox"]:checked');
     checkboxes.forEach(checkbox => {
@@ -228,17 +257,18 @@ function deleteSelectedTasks() {
     document.getElementById('delete-selected-btn').style.display = 'none';
 }
 
-// Save tasks to localStorage
 function saveTasksToLocalStorage() {
     const tasks = [];
-    document.querySelectorAll('#task-list li').forEach(item => {
+    const taskItems = document.querySelectorAll('#task-list li');
+    taskItems.forEach(item => {
         const taskText = item.getAttribute('data-task-text');
         const taskTime = item.getAttribute('data-task-time');
         const completed = item.classList.contains('completed');
         tasks.push({ taskText, taskTime, completed });
     });
 
-    document.querySelectorAll('#recent-tasks li').forEach(item => {
+    const recentTaskItems = document.querySelectorAll('#recent-tasks li');
+    recentTaskItems.forEach(item => {
         const taskText = item.getAttribute('data-task-text');
         const taskTime = item.getAttribute('data-task-time');
         const completed = item.querySelector('input[type="checkbox"]').checked;
@@ -248,18 +278,57 @@ function saveTasksToLocalStorage() {
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
-// Load tasks from localStorage
+let tasksLoaded = false;
 function loadTasksFromLocalStorage() {
-    const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-    tasks.forEach(task => {
-        addTaskToList(task.taskText, task.taskTime);
-        addToRecentTasks(task.taskText, task.taskTime, task.completed);
-    });
+    if (!tasksLoaded) {
+        const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+        tasks.forEach(task => {
+            var taskList = document.getElementById('task-list');
+            var listItem = document.createElement('li');
+
+            var checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.onchange = function () {
+                if (checkbox.checked) {
+                    listItem.classList.add('completed');
+                } else {
+                    listItem.classList.remove('completed');
+                }
+            };
+
+            var taskLabel = document.createElement('span');
+            taskLabel.textContent = task.taskText + " at " + task.taskTime;
+
+            
+            var removeButton = document.createElement('button');
+            removeButton.textContent = 'Remove';
+            removeButton.onclick = function () {
+                removeTask(listItem);
+            };
+
+            listItem.setAttribute('data-task-text', task.taskText); // Store the original task text
+            listItem.setAttribute('data-task-time', task.taskTime); // Store the task time
+            if (task.completed) {
+                listItem.classList.add('completed');
+                checkbox.checked = true;
+            }
+
+            listItem.appendChild(checkbox);
+            listItem.appendChild(taskLabel);
+            listItem.appendChild(removeButton);
+            taskList.appendChild(listItem);
+
+            // Add to recent tasks
+            addToRecentTasks(task.taskText, task.taskTime, task.completed);
+        });
+
+        updateTaskNumbers();
+        tasksLoaded = true;
+    }
 }
 
-window.onload = function() {
-    loadTasksFromLocalStorage();
-};
+
 
 
 
